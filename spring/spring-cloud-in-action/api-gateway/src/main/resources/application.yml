@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: order-service-route
+          uri: lb://ORDER-SERVICE # Eureka에 등록된 논리적 서비스명으로 클라이언트 사이드 부하 분산 적용
+          predicates:
+            - Path=/api/orders/** # 클라이언트 요청 경로 매칭 조건
+          filters:
+            # 다운스트림 마이크로서비스로 전달할 트래픽 식별 헤더를 추가합니다.
+            - AddRequestHeader=X-Gateway-Tracking-Id, 550e8400-e29b-41d4-a716-446655440000
+            # 서킷 브레이커 필터를 적용하여 장애 발생 시 우회 엔드포인트로 포워딩합니다.
+            - name: CircuitBreaker
+              args:
+                name: gatewayCircuitBreaker
+                fallbackUri: forward:/fallback/orders
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, gateway

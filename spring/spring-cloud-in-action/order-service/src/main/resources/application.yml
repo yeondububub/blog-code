@@ -1,0 +1,39 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: order-service
+  config:
+    import: "optional:configserver:http://localhost:8888"
+
+# 로컬 기본값 (Config Server가 없을 때의 기본값)
+order:
+  discount:
+    rate: 5.0
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, info, circuitbreakers
+
+# Resilience4j 서킷 브레이커 상세 설정
+resilience4j:
+  circuitbreaker:
+    instances:
+      paymentServiceBreaker:
+        sliding-window-type: COUNT_BASED
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50.0
+        slow-call-rate-threshold: 50.0
+        slow-call-duration-threshold: 2s
+        wait-duration-in-open-state: 10000ms
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true

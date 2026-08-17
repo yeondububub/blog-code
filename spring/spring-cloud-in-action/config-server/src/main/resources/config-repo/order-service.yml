@@ -1,0 +1,4 @@
+# Default configuration for order-service served by Config Server
+order:
+  discount:
+    rate: 10.0
