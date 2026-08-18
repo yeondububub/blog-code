@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.blog.payment.PaymentIdempotencyIntegrationTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-08-17T08:37:54.540Z" hostname="MacBook" time="0.559">
+  <properties/>
+  <testcase name="동일 키가 IN_PROGRESS(처리 중)인 상태에서 인입된 중복 요청은 409 CONFLICT를 반환한다" classname="com.example.blog.payment.PaymentIdempotencyIntegrationTest" time="0.057"/>
+  <testcase name="최초 결제 요청 시 비즈니스 로직이 실행되고 결과가 캐싱된다" classname="com.example.blog.payment.PaymentIdempotencyIntegrationTest" time="0.027"/>
+  <testcase name="동일한 Idempotency-Key로 재요청 시 비즈니스 로직은 재실행되지 않고 직전 응답이 반환된다" classname="com.example.blog.payment.PaymentIdempotencyIntegrationTest" time="0.008"/>
+  <system-out><![CDATA[2026-08-17T17:37:54.542+09:00  INFO 84427 --- [spring-idempotency-aop] [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.blog.payment.PaymentIdempotencyIntegrationTest]: PaymentIdempotencyIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-08-17T17:37:54.550+09:00  INFO 84427 --- [spring-idempotency-aop] [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.blog.SpringIdempotencyAopApplication for test class com.example.blog.payment.PaymentIdempotencyIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-08-17T17:37:54.569+09:00  INFO 84427 --- [spring-idempotency-aop] [    Test worker] .e.b.p.PaymentIdempotencyIntegrationTest : Starting PaymentIdempotencyIntegrationTest using Java 17.0.13 with PID 84427 (started by ydbb in /Users/ydbb/Documents/blog-code/spring/spring-idempotency-aop)
+2026-08-17T17:37:54.569+09:00  INFO 84427 --- [spring-idempotency-aop] [    Test worker] .e.b.p.PaymentIdempotencyIntegrationTest : No active profile set, falling back to 1 default profile: "default"
+2026-08-17T17:37:54.982+09:00  INFO 84427 --- [spring-idempotency-aop] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-08-17T17:37:54.982+09:00  INFO 84427 --- [spring-idempotency-aop] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-08-17T17:37:54.985+09:00  INFO 84427 --- [spring-idempotency-aop] [    Test worker] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2026-08-17T17:37:54.991+09:00  INFO 84427 --- [spring-idempotency-aop] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 7 ms
+2026-08-17T17:37:55.003+09:00  INFO 84427 --- [spring-idempotency-aop] [    Test worker] .e.b.p.PaymentIdempotencyIntegrationTest : Started PaymentIdempotencyIntegrationTest in 0.451 seconds (process running for 3.606)
+2026-08-17T17:37:55.065+09:00  INFO 84427 --- [spring-idempotency-aop] [    Test worker] c.e.blog.payment.service.PaymentService  : [결제 처리 실행 #1 ] orderId: ORD-1001, amount: 35000, method: KAKAO_PAY
+2026-08-17T17:37:55.093+09:00  INFO 84427 --- [spring-idempotency-aop] [    Test worker] c.e.blog.payment.service.PaymentService  : [결제 처리 실행 #1 ] orderId: ORD-2002, amount: 50000, method: CREDIT_CARD
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,63 @@
+### 전역 변수 설정
+@baseUrl = http://localhost:8080
+@idempotencyKey = e7b233a0-1234-4b45-8f6a-9a1b2c3d4e5f
+
+
+### 1. [최초 요청] 멱등성 키를 포함한 결제 요청
+# - 정상 결제 처리(200 OK) 및 Redis에 결과가 캐싱(COMPLETED)됩니다.
+
+POST {{baseUrl}}/api/v1/payments
+Content-Type: application/json
+Idempotency-Key: {{idempotencyKey}}
+
+{
+  "orderId": "ORD-2026-001",
+  "amount": 50000,
+  "paymentMethod": "CREDIT_CARD"
+}
+
+
+### 2. [중복 요청] 동일한 멱등성 키로 재요청 (네트워크 재시도 / 더블 클릭 시뮬레이션)
+# - 비즈니스 로직(결제 승인)이 재실행되지 않고, Redis에 캐시된 직전 응답(200 OK)이 반환됩니다.
+# - paymentId 및 approvedAt이 1번 요청의 결과와 완전히 일치하는지 확인합니다.
+
+POST {{baseUrl}}/api/v1/payments
+Content-Type: application/json
+Idempotency-Key: {{idempotencyKey}}
+
+{
+  "orderId": "ORD-2026-001",
+  "amount": 50000,
+  "paymentMethod": "CREDIT_CARD"
+}
+
+
+### 3. [동적 UUID 키] 새로운 멱등성 키로 결제 요청 (IntelliJ / VS Code 동적 변수)
+# - 매 실행 시마다 고유한 멱등성 키가 발급되어 새로운 결제가 체결됩니다.
+
+POST {{baseUrl}}/api/v1/payments
+Content-Type: application/json
+Idempotency-Key: {{$uuid}}
+
+{
+  "orderId": "ORD-2026-002",
+  "amount": 35000,
+  "paymentMethod": "KAKAO_PAY"
+}
+
+
+### 4. [키 미포함 요청] Idempotency-Key 헤더 없이 일반 결제 요청
+# - 멱등성 제어를 거치지 않고 비즈니스 로직이 항상 정상 수행됩니다.
+
+POST {{baseUrl}}/api/v1/payments
+Content-Type: application/json
+
+{
+  "orderId": "ORD-2026-003",
+  "amount": 12000,
+  "paymentMethod": "NAVER_PAY"
+}
+
+
+### 5. Actuator 헬스 체크
+GET {{baseUrl}}/actuator/health

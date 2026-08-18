@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.blog.common.idempotency.IdempotencyAspectTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-08-17T08:37:54.359Z" hostname="MacBook" time="0.18">
+  <properties/>
+  <testcase name="최초 요청(Key 없음) 인입 시 IN_PROGRESS 선점 후 정상 종료 시 COMPLETED 상태와 결과를 캐싱한다" classname="com.example.blog.common.idempotency.IdempotencyAspectTest" time="0.14"/>
+  <testcase name="동일 키가 IN_PROGRESS 상태로 존재할 때 동시 요청 인입 시 409 CONFLICT를 반환한다" classname="com.example.blog.common.idempotency.IdempotencyAspectTest" time="0.026"/>
+  <testcase name="비즈니스 로직 실행 중 예외가 발생하면 Redis 키를 즉시 삭제(롤백)하고 예외를 전파한다" classname="com.example.blog.common.idempotency.IdempotencyAspectTest" time="0.004"/>
+  <testcase name="멱등성 키 헤더가 없는 경우 AOP는 Redis 조회 없이 비즈니스 로직을 바로 실행한다" classname="com.example.blog.common.idempotency.IdempotencyAspectTest" time="0.001"/>
+  <testcase name="동일 키가 COMPLETED 상태로 존재할 때 비즈니스 로직 재실행 없이 직전 캐시 응답을 반환한다" classname="com.example.blog.common.idempotency.IdempotencyAspectTest" time="0.006"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
