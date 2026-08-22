@@ -3,6 +3,9 @@ package com.example.springsagaorchestrator.saga.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * 주문 분산 트랜잭션의 상태 머신 모델
+ */
 public class OrderSagaState implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,6 +21,7 @@ public class OrderSagaState implements Serializable {
 
     private String sagaId;
     private Long orderId;
+    private Long userId;
     private Long productId;
     private int quantity;
     private BigDecimal amount;
@@ -27,8 +31,13 @@ public class OrderSagaState implements Serializable {
     public OrderSagaState() {}
 
     public OrderSagaState(String sagaId, Long orderId, Long productId, int quantity, BigDecimal amount) {
+        this(sagaId, orderId, 1L, productId, quantity, amount);
+    }
+
+    public OrderSagaState(String sagaId, Long orderId, Long userId, Long productId, int quantity, BigDecimal amount) {
         this.sagaId = sagaId;
         this.orderId = orderId;
+        this.userId = userId;
         this.productId = productId;
         this.quantity = quantity;
         this.amount = amount;
@@ -40,6 +49,9 @@ public class OrderSagaState implements Serializable {
 
     public Long getOrderId() { return orderId; }
     public void setOrderId(Long orderId) { this.orderId = orderId; }
+
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
 
     public Long getProductId() { return productId; }
     public void setProductId(Long productId) { this.productId = productId; }

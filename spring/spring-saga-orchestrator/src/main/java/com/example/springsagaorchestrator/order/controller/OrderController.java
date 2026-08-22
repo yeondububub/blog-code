@@ -28,11 +28,13 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderCreateRequest request) {
         String sagaId = "SAGA-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+        Long userId = request.getUserId() != null ? request.getUserId() : 1L;
         Long orderId = orderService.createOrder(request.getProductId(), request.getQuantity());
 
         OrderSagaState sagaState = new OrderSagaState(
                 sagaId,
                 orderId,
+                userId,
                 request.getProductId(),
                 request.getQuantity(),
                 request.getAmount()
