@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -40,8 +41,8 @@ class OrderControllerTest {
     @Test
     @DisplayName("주문 생성 API 호출 시 200 OK와 함께 SAGA 시작 상태가 반환된다")
     void createOrder_Success() throws Exception {
-        OrderCreateRequest request = new OrderCreateRequest(1L, 2, BigDecimal.valueOf(50000));
-        given(orderService.createOrder(1L, 2)).willReturn(1001L);
+        OrderCreateRequest request = new OrderCreateRequest(1L, 1L, 2, BigDecimal.valueOf(50000));
+        given(orderService.createOrder(any(), eq(1L), eq(1L), eq(2), eq(BigDecimal.valueOf(50000)))).willReturn(1001L);
 
         mockMvc.perform(post("/api/v1/orders")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -55,7 +56,7 @@ class OrderControllerTest {
     @Test
     @DisplayName("SAGA 상태 조회 API 호출 시 현재 진행 상태를 반환한다")
     void getSagaState_Success() throws Exception {
-        OrderSagaState state = new OrderSagaState("SAGA-100", 1001L, 1L, 2, BigDecimal.valueOf(50000));
+        OrderSagaState state = new OrderSagaState("SAGA-100", 1001L, 1L, 1L, 2, BigDecimal.valueOf(50000));
         state.setStatus(OrderSagaState.SagaStatus.COMPLETED);
         state.setMessage("주문 및 분산 트랜잭션 정상 완료");
 

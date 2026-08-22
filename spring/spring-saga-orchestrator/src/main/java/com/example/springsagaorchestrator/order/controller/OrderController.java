@@ -1,5 +1,6 @@
 package com.example.springsagaorchestrator.order.controller;
 
+import com.example.springsagaorchestrator.order.domain.OrderEntity;
 import com.example.springsagaorchestrator.order.dto.OrderCreateRequest;
 import com.example.springsagaorchestrator.order.dto.OrderResponse;
 import com.example.springsagaorchestrator.order.service.OrderService;
@@ -28,8 +29,15 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderCreateRequest request) {
         String sagaId = "SAGA-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-        Long userId = request.getUserId() != null ? request.getUserId() : 1L;
-        Long orderId = orderService.createOrder(request.getProductId(), request.getQuantity());
+        Long userId = request.getUserId();
+
+        Long orderId = orderService.createOrder(
+                sagaId,
+                userId,
+                request.getProductId(),
+                request.getQuantity(),
+                request.getAmount()
+        );
 
         OrderSagaState sagaState = new OrderSagaState(
                 sagaId,
@@ -66,8 +74,8 @@ public class OrderController {
      * 주문 상태 단건 조회 API
      */
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderService.OrderStatus> getOrderStatus(@PathVariable Long orderId) {
-        OrderService.OrderStatus status = orderService.getOrderStatus(orderId);
+    public ResponseEntity<OrderEntity.OrderStatus> getOrderStatus(@PathVariable Long orderId) {
+        OrderEntity.OrderStatus status = orderService.getOrderStatus(orderId);
         if (status == null) {
             return ResponseEntity.notFound().build();
         }
