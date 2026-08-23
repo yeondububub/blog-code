@@ -47,7 +47,7 @@ public class OrderService {
         orderOpt.ifPresent(order -> {
             order.complete();
             orderRepository.save(order);
-            log.info("[주문 서비스] 🎉 주문 최종 체결 완료 (CONFIRMED) - orderId: {}, sagaId: {}",
+            log.info("[주문 서비스] 주문 최종 체결 완료 (CONFIRMED) - orderId: {}, sagaId: {}",
                     order.getId(), command.getSagaId());
         });
     }
@@ -62,7 +62,7 @@ public class OrderService {
         orderOpt.ifPresent(order -> {
             order.cancel();
             orderRepository.save(order);
-            log.warn("[주문 서비스] ❌ 주문 취소/롤백 완료 (CANCELLED) - orderId: {}, sagaId: {}, 이유: {}",
+            log.warn("[주문 서비스] 주문 취소/롤백 완료 (CANCELLED) - orderId: {}, sagaId: {}, 이유: {}",
                     order.getId(), command.getSagaId(), command.getMessage());
         });
     }

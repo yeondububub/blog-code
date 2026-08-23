@@ -1,0 +1,126 @@
+### 전역 변수 설정
+@baseUrl = http://localhost:8080
+
+# ===================================================================
+### 0. 초기 계좌 잔액 및 재고 상태 확인
+# - User 1번: 150,000원
+# - User 2번: 5,000원 (잔액 부족 테스트용)
+# - Product 1번: 100개 (정상 상품)
+# - Product 999번: 0개 (품절 상품)
+# ===================================================================
+
+### 0-1. User 1번 계좌 잔액 조회 (초기: 150,000원)
+GET {{baseUrl}}/api/v1/accounts/users/1
+
+### 0-2. User 2번 계좌 잔액 조회 (초기: 5,000원)
+GET {{baseUrl}}/api/v1/accounts/users/2
+
+### 0-3. Product 1번 재고 조회 (초기: 100개)
+GET {{baseUrl}}/api/v1/inventories/products/1
+
+### 0-4. Product 999번 재고 조회 (초기: 0개 품절)
+GET {{baseUrl}}/api/v1/inventories/products/999
+
+
+# ===================================================================
+### 1. [시나리오 1: 정상 주문 체결 (Happy Path)]
+# - User 1번이 Product 1번(단가 50,000원) 1개 주문
+# - 1) User 1 계좌에서 50,000원 출금 (150,000원 -> 100,000원)
+# - 2) Product 1 재고 1개 차감 (100개 -> 99개)
+# - 3) SAGA 상태: COMPLETED, 주문 상태: CONFIRMED
+# ===================================================================
+POST {{baseUrl}}/api/v1/orders
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "productId": 1,
+  "quantity": 1,
+  "amount": 50000
+}
+
+> {%
+    client.global.set("sagaId1", response.body.sagaId);
+    client.global.set("orderId1", response.body.orderId);
+%}
+
+### 1-1. 시나리오 1 SAGA 상태 조회 (COMPLETED 확인)
+GET {{baseUrl}}/api/v1/orders/saga/{{sagaId1}}
+
+### 1-2. 시나리오 1 주문 상태 조회 (CONFIRMED 확인)
+GET {{baseUrl}}/api/v1/orders/{{orderId1}}
+
+### 1-3. 시나리오 1 체결 후 User 1 잔액 확인 (50,000원 차감 확인)
+GET {{baseUrl}}/api/v1/accounts/users/1
+
+### 1-4. 시나리오 1 체결 후 Product 1 재고 확인 (99개로 차감 확인)
+GET {{baseUrl}}/api/v1/inventories/products/1
+
+
+# ===================================================================
+### 2. [시나리오 2: 재고 부족 실패 및 역순 보상 트랜잭션 롤백 (Compensating Path)]
+# - User 1번이 품절 상품인 Product 999번(단가 70,000원) 주문
+# - 1) 결제 서비스: User 1 계좌에서 70,000원 임시 출금 성공 (PAYMENT_SUCCESS)
+# - 2) 재고 서비스: Product 999 재고 부족으로 차감 실패 (FAILED)
+# - 3) 오케스트레이터: payment-compensate-commands 발행
+# - 4) 보상 트랜잭션: 결제 환불 실행 -> User 1 계좌로 70,000원 재입금 원복!
+# - 5) SAGA 상태: COMPENSATING -> FAILED, 주문 상태: CANCELLED
+# ===================================================================
+POST {{baseUrl}}/api/v1/orders
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "productId": 999,
+  "quantity": 1,
+  "amount": 70000
+}
+
+> {%
+    client.global.set("sagaId2", response.body.sagaId);
+    client.global.set("orderId2", response.body.orderId);
+%}
+
+### 2-1. 시나리오 2 SAGA 상태 조회 (COMPENSATING / FAILED 확인)
+GET {{baseUrl}}/api/v1/orders/saga/{{sagaId2}}
+
+### 2-2. 시나리오 2 주문 상태 조회 (CANCELLED 롤백 확인)
+GET {{baseUrl}}/api/v1/orders/{{orderId2}}
+
+### 2-3. 시나리오 2 보상 환불 후 User 1 잔액 확인 (원래 잔액으로 복구 확인)
+GET {{baseUrl}}/api/v1/accounts/users/1
+
+
+# ===================================================================
+### 3. [시나리오 3: 결제 잔액 부족 실패 (Fast-Fail Path)]
+# - User 2번(잔액 5,000원)이 50,000원 주문 시도
+# - 1) 결제 서비스: 잔액 부족으로 출금 실패 (FAILED)
+# - 2) 재고 차감 시도 없이 즉시 주문 취소 (order-cancel-commands)
+# - 3) SAGA 상태: FAILED, 주문 상태: CANCELLED
+# ===================================================================
+POST {{baseUrl}}/api/v1/orders
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "productId": 1,
+  "quantity": 1,
+  "amount": 50000
+}
+
+> {%
+    client.global.set("sagaId3", response.body.sagaId);
+    client.global.set("orderId3", response.body.orderId);
+%}
+
+### 3-1. 시나리오 3 SAGA 상태 조회 (FAILED 확인)
+GET {{baseUrl}}/api/v1/orders/saga/{{sagaId3}}
+
+### 3-2. 시나리오 3 실패 후 User 2 잔액 확인 (5,000원 유지 확인)
+GET {{baseUrl}}/api/v1/accounts/users/2
+
+
+# ===================================================================
+### 4. Actuator 헬스 체크
+# ===================================================================
+GET {{baseUrl}}/actuator/health
