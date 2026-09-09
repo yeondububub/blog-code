@@ -1,0 +1,20 @@
+# Xcode and iOS
+build/
+DerivedData/
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+
+## User settings
+xcuserdata/
+
+## Swift Package Manager
+.build/
+Packages/
+
+## CocoaPods & Carthage
+Pods/
+Carthage/Build/
+
+## OS
+.DS_Store
