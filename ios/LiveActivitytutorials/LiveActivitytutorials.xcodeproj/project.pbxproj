@@ -6,14 +6,65 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FCE594B63052D499001EEC46 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE594B53052D499001EEC46 /* WidgetKit.framework */; };
+		FCE594B83052D499001EEC46 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE594B73052D499001EEC46 /* SwiftUI.framework */; };
+		FCE594C73052D49B001EEC46 /* DeliveryActivityWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = FCE594B33052D499001EEC46 /* DeliveryActivityWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FCE594C53052D49B001EEC46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FCE5948D30514B03001EEC46 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FCE594B23052D499001EEC46;
+			remoteInfo = DeliveryActivityWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FCE594C83052D49B001EEC46 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				FCE594C73052D49B001EEC46 /* DeliveryActivityWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		FCE5949530514B03001EEC46 /* LiveActivityTutorials.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveActivityTutorials.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCE594B33052D499001EEC46 /* DeliveryActivityWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DeliveryActivityWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCE594B53052D499001EEC46 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		FCE594B73052D499001EEC46 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		FCE594CB3052D49B001EEC46 /* Exceptions for "DeliveryActivityWidget" folder in "DeliveryActivityWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = FCE594B23052D499001EEC46 /* DeliveryActivityWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		FCE5949730514B03001EEC46 /* LiveActivityTutorials */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = LiveActivityTutorials;
+			sourceTree = "<group>";
+		};
+		FCE594B93052D499001EEC46 /* DeliveryActivityWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FCE594CB3052D49B001EEC46 /* Exceptions for "DeliveryActivityWidget" folder in "DeliveryActivityWidgetExtension" target */,
+			);
+			path = DeliveryActivityWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -26,6 +77,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FCE594B03052D499001EEC46 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FCE594B83052D499001EEC46 /* SwiftUI.framework in Frameworks */,
+				FCE594B63052D499001EEC46 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -33,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				FCE5949730514B03001EEC46 /* LiveActivityTutorials */,
+				FCE594B93052D499001EEC46 /* DeliveryActivityWidget */,
+				FCE594B43052D499001EEC46 /* Frameworks */,
 				FCE5949630514B03001EEC46 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,8 +103,18 @@
 			isa = PBXGroup;
 			children = (
 				FCE5949530514B03001EEC46 /* LiveActivityTutorials.app */,
+				FCE594B33052D499001EEC46 /* DeliveryActivityWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FCE594B43052D499001EEC46 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FCE594B53052D499001EEC46 /* WidgetKit.framework */,
+				FCE594B73052D499001EEC46 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -55,10 +127,12 @@
 				FCE5949130514B03001EEC46 /* Sources */,
 				FCE5949230514B03001EEC46 /* Frameworks */,
 				FCE5949330514B03001EEC46 /* Resources */,
+				FCE594C83052D49B001EEC46 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				FCE594C63052D49B001EEC46 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				FCE5949730514B03001EEC46 /* LiveActivityTutorials */,
@@ -69,6 +143,28 @@
 			productName = LiveActivityTutorials;
 			productReference = FCE5949530514B03001EEC46 /* LiveActivityTutorials.app */;
 			productType = "com.apple.product-type.application";
+		};
+		FCE594B23052D499001EEC46 /* DeliveryActivityWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FCE594CC3052D49B001EEC46 /* Build configuration list for PBXNativeTarget "DeliveryActivityWidgetExtension" */;
+			buildPhases = (
+				FCE594AF3052D499001EEC46 /* Sources */,
+				FCE594B03052D499001EEC46 /* Frameworks */,
+				FCE594B13052D499001EEC46 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				FCE594B93052D499001EEC46 /* DeliveryActivityWidget */,
+			);
+			name = DeliveryActivityWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = DeliveryActivityWidgetExtension;
+			productReference = FCE594B33052D499001EEC46 /* DeliveryActivityWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -81,6 +177,9 @@
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					FCE5949430514B03001EEC46 = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					FCE594B23052D499001EEC46 = {
 						CreatedOnToolsVersion = 26.2;
 					};
 				};
@@ -100,12 +199,20 @@
 			projectRoot = "";
 			targets = (
 				FCE5949430514B03001EEC46 /* LiveActivityTutorials */,
+				FCE594B23052D499001EEC46 /* DeliveryActivityWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		FCE5949330514B03001EEC46 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FCE594B13052D499001EEC46 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +229,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FCE594AF3052D499001EEC46 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FCE594C63052D49B001EEC46 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FCE594B23052D499001EEC46 /* DeliveryActivityWidgetExtension */;
+			targetProxy = FCE594C53052D49B001EEC46 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		FCE5949E30514B05001EEC46 /* Debug */ = {
@@ -308,6 +430,64 @@
 			};
 			name = Release;
 		};
+		FCE594C93052D49B001EEC46 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DeliveryActivityWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DeliveryActivityWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sfk.LiveActivityTutorials.DeliveryActivityWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FCE594CA3052D49B001EEC46 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DeliveryActivityWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = DeliveryActivityWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sfk.LiveActivityTutorials.DeliveryActivityWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -325,6 +505,15 @@
 			buildConfigurations = (
 				FCE594A130514B05001EEC46 /* Debug */,
 				FCE594A230514B05001EEC46 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FCE594CC3052D49B001EEC46 /* Build configuration list for PBXNativeTarget "DeliveryActivityWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FCE594C93052D49B001EEC46 /* Debug */,
+				FCE594CA3052D49B001EEC46 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
