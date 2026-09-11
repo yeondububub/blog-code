@@ -51,11 +51,21 @@
 			);
 			target = FCE594B23052D499001EEC46 /* DeliveryActivityWidgetExtension */;
 		};
+		FCE594D030543CD9001EEC46 /* Exceptions for "LiveActivityTutorials" folder in "DeliveryActivityWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				DeliveryActivityAttributes.swift,
+			);
+			target = FCE594B23052D499001EEC46 /* DeliveryActivityWidgetExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		FCE5949730514B03001EEC46 /* LiveActivityTutorials */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				FCE594D030543CD9001EEC46 /* Exceptions for "LiveActivityTutorials" folder in "DeliveryActivityWidgetExtension" target */,
+			);
 			path = LiveActivityTutorials;
 			sourceTree = "<group>";
 		};
