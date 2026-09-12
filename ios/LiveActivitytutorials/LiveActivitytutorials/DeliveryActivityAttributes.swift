@@ -12,7 +12,7 @@ struct DeliveryActivityAttributes: ActivityAttributes {
     
     public struct ContentState: Codable, Hashable {
         var statusText: String
-        var estimataedDeliveryTime: Date
+        var estimatedDeliveryTime: Date
         var progress: Double
     }
     

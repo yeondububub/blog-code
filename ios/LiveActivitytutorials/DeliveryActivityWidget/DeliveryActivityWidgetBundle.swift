@@ -12,6 +12,6 @@ import SwiftUI
 struct DeliveryActivityWidgetBundle: WidgetBundle {
     var body: some Widget {
         DeliveryActivityWidget()
-        DeliveryActivityWidgetLiveActivity()
+        DeliveryLiveActivity()
     }
 }
