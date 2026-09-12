@@ -57,31 +57,80 @@ struct lockScreenLiveActivityView: View {
     let context: ActivityViewContext<DeliveryActivityAttributes>
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(context.attributes.restaurantName)
-                    .font(.headline)
-                    .foregroundStyle(.white)
+        VStack(spacing: 12) {
+            // 상단 헤더: 브랜드 및 주문 번호
+            HStack(alignment: .center) {
+                HStack(spacing: 8) {
+                    Image(systemName: "fork.knife.circle.fill")
+                        .font(.title3)
+                        .foregroundStyle(.orange)
+                    Text(context.attributes.restaurantName)
+                        .font(.headline)
+                        .bold()
+                        .foregroundStyle(.white)
+                }
+                
                 Spacer()
-                Text("주문번호: \(context.attributes.orderNumber)")
-                    .font(.caption)
-                    .foregroundStyle(.gray)
+                
+                Text("주문번호 \(context.attributes.orderNumber)")
+                    .font(.caption2)
+                    .foregroundStyle(.white.opacity(0.7))
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Color.white.opacity(0.12))
+                    .clipShape(Capsule())
             }
             
-            HStack {
-                Text(context.state.statusText)
-                    .font(.subheadline)
-                    .foregroundStyle(.orange)
+            // 중단 정보: 배달 상태 문구 및 예상 도착 시간
+            HStack(alignment: .lastTextBaseline) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("배달 현황")
+                        .font(.caption2)
+                        .foregroundStyle(.white.opacity(0.5))
+                    Text(context.state.statusText)
+                        .font(.title3)
+                        .bold()
+                        .foregroundStyle(.orange)
+                }
+                
                 Spacer()
-                Text(context.state.estimatedDeliveryTime, style: .time)
-                    .font(.subheadline)
-                    .bold()
-                    .foregroundStyle(.white)
+                
+                VStack(alignment: .trailing, spacing: 4) {
+                    Text("도착 예정")
+                        .font(.caption2)
+                        .foregroundStyle(.white.opacity(0.5))
+                    Text(context.state.estimatedDeliveryTime, style: .time)
+                        .font(.title3)
+                        .bold()
+                        .foregroundStyle(.white)
+                }
             }
             
-            ProgressView(value: context.state.progress)
-                .progressViewStyle(LinearProgressViewStyle(tint: .orange))
+            // 하단 게이지 바 및 단계별 라벨
+            VStack(spacing: 6) {
+                ProgressView(value: context.state.progress)
+                    .progressViewStyle(LinearProgressViewStyle(tint: .orange))
+                    .scaleEffect(x: 1, y: 1.8, anchor: .center)
+                    .clipShape(Capsule())
+                
+                HStack {
+                    Text("접수")
+                        .foregroundStyle(context.state.progress >= 0.1 ? .orange : .white.opacity(0.3))
+                    Spacer()
+                    Text("조리")
+                        .foregroundStyle(context.state.progress >= 0.3 ? .orange : .white.opacity(0.3))
+                    Spacer()
+                    Text("배달")
+                        .foregroundStyle(context.state.progress >= 0.7 ? .orange : .white.opacity(0.3))
+                    Spacer()
+                    Text("완료")
+                        .foregroundStyle(context.state.progress >= 1.0 ? .orange : .white.opacity(0.3))
+                }
+                .font(.system(size: 11, weight: .semibold))
+            }
         }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 16)
     }
 }
 
