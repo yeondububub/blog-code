@@ -34,7 +34,7 @@ final class DeliveryActivityManager {
             let activity = try Activity<DeliveryActivityAttributes>.request(
                 attributes: attributes,
                 content: activityContent,
-                pushType: .token
+                pushType: nil
             )
             self.currentActivity = activity
             print("엑티비티 등록 성공! ID: \(activity.id) ")
