@@ -66,18 +66,22 @@ final class DeliveryActivityManager {
         }
     }
     
-    // 3. 엑티비티 종료
-    func endDeliveryActivity(dismissalPolicy: ActivityUIDismissalPolicy = .default) {
+    // 3. 액티비티 종료 (기본 1분간 완료 상태 유지 후 자동 소멸)
+    func endDeliveryActivity(dismissalPolicy: ActivityUIDismissalPolicy = .after(Date().addingTimeInterval(60))) {
         guard let activity = currentActivity else { return }
         
-        let finalContentState = DeliveryActivityAttributes.ContentState(statusText: "배달 완료", estimatedDeliveryTime: Date(), progress: 1.0)
+        let finalContentState = DeliveryActivityAttributes.ContentState(
+            statusText: "배달 완료",
+            estimatedDeliveryTime: Date(),
+            progress: 1.0
+        )
         
         let activityContent = ActivityContent(state: finalContentState, staleDate: nil)
         
         Task {
             await activity.end(activityContent, dismissalPolicy: dismissalPolicy)
             self.currentActivity = nil
-            print("엑티비티 종료 완료")
+            print("액티비티 종료 완료 (상태 유지 후 자동 제거)")
         }
     }
 }

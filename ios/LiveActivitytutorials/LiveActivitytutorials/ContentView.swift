@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ActivityKit
 
 struct ContentView: View {
     var body: some View {
@@ -72,11 +73,23 @@ struct ContentView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
                 
-                // 4. 배달 완료 및 종료
+                // 4. 배달 완료 및 지연 종료 (1분간 상태 유지 후 자동 소멸)
                 Button {
                     DeliveryActivityManager.shard.endDeliveryActivity()
                 } label: {
-                    Label("4. 배달 완료 및 종료", systemImage: "stop.circle.fill")
+                    Label("4. 배달 완료 (1분 유지 후 자동 종료)", systemImage: "checkmark.circle.fill")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundStyle(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+                
+                // 5. 라이브 액티비티 즉시 종료 (화면에서 바로 제거)
+                Button {
+                    DeliveryActivityManager.shard.endDeliveryActivity(dismissalPolicy: .immediate)
+                } label: {
+                    Label("5. 즉시 종료 테스트 (0초)", systemImage: "xmark.circle.fill")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.red)

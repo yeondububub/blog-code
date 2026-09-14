@@ -23,9 +23,16 @@ struct DeliveryLiveActivity: Widget {
                         .foregroundStyle(.primary)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    Text(timerInterval: Date()...context.state.estimatedDeliveryTime, countsDown: true)
-                        .font(.caption)
-                        .foregroundStyle(.orange)
+                    if context.state.progress >= 1.0 || context.state.estimatedDeliveryTime <= Date() {
+                        Text("배달 완료")
+                            .font(.caption)
+                            .bold()
+                            .foregroundStyle(.green)
+                    } else {
+                        Text(timerInterval: Date()...context.state.estimatedDeliveryTime, countsDown: true)
+                            .font(.caption)
+                            .foregroundStyle(.orange)
+                    }
                 }
                 DynamicIslandExpandedRegion(.bottom) {
                     VStack(alignment: .leading, spacing: 4) {
@@ -90,19 +97,19 @@ struct lockScreenLiveActivityView: View {
                     Text(context.state.statusText)
                         .font(.title3)
                         .bold()
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(context.state.progress >= 1.0 ? .green : .orange)
                 }
                 
                 Spacer()
                 
                 VStack(alignment: .trailing, spacing: 4) {
-                    Text("도착 예정")
+                    Text(context.state.progress >= 1.0 ? "도착 완료" : "도착 예정")
                         .font(.caption2)
                         .foregroundStyle(.white.opacity(0.5))
                     Text(context.state.estimatedDeliveryTime, style: .time)
                         .font(.title3)
                         .bold()
-                        .foregroundStyle(.white)
+                        .foregroundStyle(context.state.progress >= 1.0 ? .green : .white)
                 }
             }
             
